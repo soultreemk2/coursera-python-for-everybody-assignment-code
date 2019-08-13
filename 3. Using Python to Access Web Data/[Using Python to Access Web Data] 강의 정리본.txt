@@ -1,0 +1,99 @@
+[Using Python to Access Web Data] 강의 정리본
+
+1. Retrieving Web Pages
+ - using urllib in python
+ ** urllib 라이브러리: HTTP로 구성된 웹페이지를 파일 형태로 변환. 파일처럼 취급
+
+# 예시
+import urllib.request, urllib.parse, urllib.error
+fhand = urllib.request.urlopen('http:// ~~~')
+for line in fhand:
+  print(line.decode().rstrip())
+
+# 단어 숫자 세기
+import urllib.request, urllib.parse, urllib.error
+fhand = urllib.request.urlopen('http:// ~~~')
+
+counts = dict()
+for line in fhand:
+  words = line.decode().split()
+  for word in words:
+    counts[word] = counts.get(word,0) + 1
+print(counts)
+
+
+2. Parsing(Scraping) Web Pages
+- using BeautifulSoup 
+ ** BeautifulSoup: HTML구문을 다루는 가장 쉬운 방법
+
+# BeautifulSoup installation
+http://www.py4e.com/code3/bs4.zip
+
+# 예시
+import urllib.request, urllib.parse, urllib.error
+from bs4 import BeautifulSoup
+
+url = input('Enter - ')
+html = urllib.request.urlopen(url).read()
+soup = BeautifulSoup(html, 'html.parser')
+
+# Retrieve all of the anchor tags
+tags = soup('a')
+for tag in tags:
+  print(tag.get('href', None)
+
+
+3. XML
+- 구성요소: start tag, text content, end tag, attribute, self closing tag
+
+<a>
+ <b> X </b>
+ <c>
+   <d> Y </d>
+   <e> Z </e>
+ <c>
+</a>
+
+
+- Parsing XML
+
+# 예시1
+import xml.etree.ElementTree as ET
+data = '~~~~'
+
+tree = ET.fromstring(data)
+print('Name: ' , tree.find('name').text)
+print('Attr: ' , tree.find('email').get('hide')
+
+
+# 예시2
+import xml.etree.ElementTree as ET
+input = '~~~~'
+
+stuff = ET.fromstring(input)
+lst = stuff.findall('users/user')
+for item in lst:
+  print('name: ', item.find('name').text)
+  print('id: ', item.find('id').text)
+  print('attribute: ', item.get('x'))
+
+
+
+
+4. JSON
+json represents data as nested "lists" and "dictionaries"
+much simpler, easier than XML
+
+# 예시1
+import json
+info = json.loads(data)
+print('name: ', info["name"])
+print('hide: ', info["email"]["hide"]
+
+# 예시2 - geojson api
+# 예시3 - twitter api
+
+
+
+
+
